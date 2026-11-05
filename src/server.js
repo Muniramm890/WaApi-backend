@@ -1,4 +1,9 @@
 'use strict';
+// Optional Azure Application Insights: only active when the connection string is set and the package is installed.
+if (process.env.APPLICATIONINSIGHTS_CONNECTION_STRING) {
+  try { require('applicationinsights').setup().setAutoCollectConsole(true, true).start(); }
+  catch (e) { console.warn('[appinsights] not started:', e.message); }
+}
 const cfg = require('./config');
 const db = require('./db');
 const log = require('./lib/logger');

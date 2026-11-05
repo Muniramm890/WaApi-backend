@@ -62,6 +62,12 @@ function fail(msg) { throw new Error('[config] ' + msg); }
 if (!['pg', 'mssql'].includes(cfg.db.client)) fail('DB_CLIENT must be "pg" or "mssql"');
 
 if (prod) {
+  if (cfg.db.client === 'pg' && !cfg.db.url) fail('DATABASE_URL is required in production when DB_CLIENT=pg');
+  if (cfg.db.client === 'mssql') {
+    const m = cfg.db.mssql;
+    const missing = ['server', 'database', 'user', 'password'].filter((k) => !m[k]).map((k) => 'MSSQL_' + k.toUpperCase());
+    if (missing.length) fail(missing.join(', ') + ' required in production when DB_CLIENT=mssql');
+  }
   if (!cfg.jwtSecret || cfg.jwtSecret.length < 32) fail('JWT_SECRET (>=32 chars) is required in production');
   if (!cfg.encKey || Buffer.from(cfg.encKey, 'base64').length !== 32) fail('ENCRYPTION_KEY (32 bytes, base64) is required in production');
 } else {
