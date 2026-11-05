@@ -21,12 +21,12 @@ npm start                 # connects -> creates DB (pg) -> migrates -> seeds -> 
 
 First run: creates every table and index, 4 placeholder plans (edit prices in the Control Center), default settings and the first `super_admin` from `SEED_STAFF_EMAIL/PASSWORD`. Re-running is a no-op. New schema changes = append a migration in `src/db/schema.js` (`migrations[]`); they run in one transaction under a lock, so several instances can boot together.
 
-`npm run migrate` runs migrate + seed without starting the server. `npm test` runs an end-to-end smoke test (needs PostgreSQL + mock Meta; see `test/smoke.js`).
+`npm run migrate` runs migrate + seed without starting the server. `npm run test:smoke` runs an end-to-end smoke test (needs PostgreSQL + mock Meta; see `test/smoke.js`).
 
 ### Database notes
 - **PostgreSQL**: the database itself is auto-created if missing.
 - **MSSQL / Azure SQL**: create the empty database in Azure first (the app creates all tables). Set `MSSQL_*`.
-- All SQL is written once in a portable subset (`?` params, no booleans/JSON types/date functions, `db.lim()` for row limits, `db.insert()` for ids) and the DDL is generated per dialect. The PostgreSQL path is covered by the smoke test; the MSSQL path was reviewed statically (DDL output inspected) but was **not executed against a real SQL Server in the build sandbox. Run `npm start` once against your Azure SQL and `npm test` equivalent flows before going live.**
+- All SQL is written once in a portable subset (`?` params, no booleans/JSON types/date functions, `db.lim()` for row limits, `db.insert()` for ids) and the DDL is generated per dialect. The PostgreSQL path is covered by the smoke test; the MSSQL path was reviewed statically (DDL output inspected) but was **not executed against a real SQL Server in the build sandbox. Run `npm start` once against your Azure SQL and `npm run test:smoke` equivalent flows before going live.**
 
 ## Meta (Tech Provider) setup checklist
 1. Meta app (type Business) with **WhatsApp** product; business verification complete; App Review for `whatsapp_business_management` + `whatsapp_business_messaging` (+ `business_management` if asked).
