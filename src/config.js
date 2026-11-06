@@ -38,7 +38,7 @@ const cfg = {
     appId: env.META_APP_ID,
     appSecret: env.META_APP_SECRET,
     esConfigId: env.META_ES_CONFIG_ID,
-    apiVersion: env.META_API_VERSION || 'v23.0',
+    apiVersion: env.META_API_VERSION || 'v27.0',
     graphBase: String(env.META_GRAPH_BASE || 'https://graph.facebook.com').replace(/\/$/, ''),
     systemToken: env.META_SYSTEM_USER_TOKEN,
     businessId: env.META_BUSINESS_ID,

@@ -20,7 +20,7 @@ function signupConfig(ctx) {
   return {
     app_id: cfg.meta.appId, config_id: cfg.meta.esConfigId, api_version: cfg.meta.apiVersion,
     state: signState({ tid: ctx.tenant.id, uid: ctx.actor.id, n: crypto.randomBytes(6).toString('hex') }),
-    // the frontend runs FB.login({config_id, response_type:'code', override_default_response_type:true, extras:{setup:{}, featureType:'', sessionInfoVersion:'3'}})
+    // the frontend runs FB.login({config_id, response_type:'code', override_default_response_type:true, extras:{setup:{}, version:'v5', features:[{name:'whatsapp_business_app_onboarding', enabled:false}]}})
   };
 }
 
